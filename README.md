@@ -1,21 +1,10 @@
-# Aoc
+# Advent of Code 2022
 
-**TODO: Add description**
+[https://adventofcode.com](https://adventofcode.com)
 
-## Installation
+### Generators
+Run `mix gen N` (where N is a number: `1..25`) to generate the files for the day (inputs, test and module)
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `aoc` to your list of dependencies in `mix.exs`:
+Run `mix day N` to run the module of day N
 
-```elixir
-def deps do
-  [
-    {:aoc, "~> 0.1.0"}
-  ]
-end
-```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/aoc](https://hexdocs.pm/aoc).
 

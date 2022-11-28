@@ -1,15 +1,16 @@
-defmodule AdventOfCode do
-  # def run(day, part \\ 1) do
-  #   string_day = to_string(day) |> String.pad_leading(2, "0")
-  #   module = String.to_atom("#{__MODULE__}.Day#{string_day}")
-  #   input = File.read!("../inputs/day_#{string_day}.txt")
+defmodule Aoc.CodeGenerator do
+  def run(day, part \\ 1) do
 
-  #   case part do
-  #     1 -> module.part1(input)
-  #     2 -> module.part2(input)
-  #     _ -> {:error, "No such part#{part}"}
-  #   end
-  # end
+    string_day = to_string(day) |> String.pad_leading(2, "0")
+    module = String.to_atom("Elixir.Aoc.Day#{string_day}")
+    input = "../inputs/day_#{string_day}.txt"
+
+    case part do
+      1 -> module.part_one(input)
+      2 -> module.part_two(input)
+      _ -> {:error, "No such part #{part}"}
+    end
+  end
 
   def generate(day) do
     string_day = to_string(day) |> String.pad_leading(2, "0")

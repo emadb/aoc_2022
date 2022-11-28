@@ -7,6 +7,6 @@ defmodule Mix.Tasks.Gen do
 
   def run([day]) do
     String.to_integer(day)
-    |> AdventOfCode.generate()
+    |> Aoc.CodeGenerator.generate()
   end
 end

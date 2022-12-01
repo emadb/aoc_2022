@@ -48,7 +48,7 @@ defmodule Aoc.CodeGenerator do
 
       test "part two (test)" do
         input = Path.absname(@test_input)
-        result = Aoc.Day#{string_day}.part_one(input)
+        result = Aoc.Day#{string_day}.part_two(input)
 
         assert result == nil
       end

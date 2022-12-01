@@ -30,7 +30,7 @@ defmodule Aoc.CodeGenerator do
     template_test = """
     defmodule Aoc.Day#{string_day}Test do
       use ExUnit.Case
-      @test_input "./test/test_inputs/day_#{string_day}.txt"
+      @test_input "./test/inputs/day_#{string_day}.txt"
       @real_input "./lib/inputs/day_#{string_day}.txt"
 
       test "part one (test)" do

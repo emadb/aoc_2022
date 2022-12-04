@@ -1,4 +1,5 @@
 defmodule Aoc.Day03 do
+
   def part_one(input) do
     InputReader.get_lines_string(input)
     |> Enum.map(fn l ->
@@ -29,6 +30,16 @@ defmodule Aoc.Day03 do
 
 
   def part_two(input) do
-    input
+    InputReader.get_lines_string(input)
+    |> Enum.chunk_every(3)
+    |> Enum.map(fn [r1, r2, r3] ->
+      s1 = r1 |> String.graphemes() |> MapSet.new()
+      s2 = r2 |> String.graphemes() |> MapSet.new()
+      s3 = r3 |> String.graphemes() |> MapSet.new()
+      MapSet.intersection(s1, s2) |> MapSet.intersection(s3)
+    end)
+    |> Enum.map(&Enum.uniq/1)
+    |> Enum.map(fn [l] -> priority(l) end)
+    |> Enum.sum()
   end
 end

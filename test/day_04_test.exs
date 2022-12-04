@@ -16,17 +16,17 @@ defmodule Aoc.Day04Test do
     assert result == 528
   end
 
-  # test "part two (test)" do
-  #   input = Path.absname(@test_input)
-  #   result = Aoc.Day04.part_two(input)
+  test "part two (test)" do
+    input = Path.absname(@test_input)
+    result = Aoc.Day04.part_two(input)
 
-  #   assert result == nil
-  # end
+    assert result == 4
+  end
 
-  # test "part two" do
-  #   input = Path.absname(@real_input)
-  #   result = Aoc.Day04.part_two(input)
-  #   assert result == nil
-  # end
+  test "part two" do
+    input = Path.absname(@real_input)
+    result = Aoc.Day04.part_two(input)
+    assert result == 881
+  end
 
 end

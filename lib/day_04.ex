@@ -3,7 +3,7 @@ defmodule Aoc.Day04 do
     InputReader.get_lines_string(input)
     |> Enum.map(fn s ->
       [r1, r2] = String.split(s, ",")
-      overlap?(get_range(r1), get_range(r2))
+      completely_overlap?(get_range(r1), get_range(r2))
     end)
     |> Enum.count(fn x -> x end)
   end
@@ -13,7 +13,7 @@ defmodule Aoc.Day04 do
     String.to_integer(p1)..String.to_integer(p2)
   end
 
-  defp overlap?(r1, r2) do
+  defp completely_overlap?(r1, r2) do
     r1_first = r1 |> Enum.to_list() |> List.first()
     r1_last = r1 |> Enum.to_list() |> List.last()
 
@@ -27,6 +27,19 @@ defmodule Aoc.Day04 do
   end
 
   def part_two(input) do
-    input
+    InputReader.get_lines_string(input)
+    |> Enum.map(fn s ->
+      [r1, r2] = String.split(s, ",")
+      overlap?(get_range(r1), get_range(r2))
+    end)
+    |> Enum.count(fn x -> x end)
+  end
+
+  defp overlap?(r1, r2) do
+    l1 = Enum.to_list(r1) |> MapSet.new()
+    l2 = Enum.to_list(r2) |> MapSet.new()
+
+    MapSet.intersection(l1,l2) |> MapSet.to_list() |> Enum.count() > 0
+
   end
 end

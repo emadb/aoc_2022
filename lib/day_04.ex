@@ -14,16 +14,10 @@ defmodule Aoc.Day04 do
   end
 
   defp completely_overlap?(r1, r2) do
-    r1_first = r1 |> Enum.to_list() |> List.first()
-    r1_last = r1 |> Enum.to_list() |> List.last()
+    s1 = Enum.to_list(r1) |> MapSet.new()
+    s2 = Enum.to_list(r2) |> MapSet.new()
 
-    r2_first = r2 |> Enum.to_list() |> List.first()
-    r2_last = r2 |> Enum.to_list() |> List.last()
-
-    r1_contains_r2 = r1_first <= r2_first && r1_last >= r2_last
-    r2_contains_r1 = r2_first <= r1_first && r2_last >= r1_last
-
-    r1_contains_r2 || r2_contains_r1
+    MapSet.subset?(s1, s2) || MapSet.subset?(s2, s1)
   end
 
   def part_two(input) do
@@ -39,7 +33,6 @@ defmodule Aoc.Day04 do
     l1 = Enum.to_list(r1) |> MapSet.new()
     l2 = Enum.to_list(r2) |> MapSet.new()
 
-    MapSet.intersection(l1,l2) |> MapSet.to_list() |> Enum.count() > 0
-
+    MapSet.intersection(l1,l2) |> MapSet.size() > 0
   end
 end

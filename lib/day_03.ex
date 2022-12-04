@@ -19,7 +19,9 @@ defmodule Aoc.Day03 do
   end
 
   defp priority(char) do
-    ascii = String.to_charlist(char) |> List.first()
+    ascii = char
+      |> String.to_charlist()
+      |> List.first()
 
     if String.upcase(char) == char do
       ascii - ?A + 27
@@ -27,7 +29,6 @@ defmodule Aoc.Day03 do
       ascii - ?a + 1
     end
   end
-
 
   def part_two(input) do
     InputReader.get_lines_string(input)

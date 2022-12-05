@@ -16,7 +16,19 @@ defmodule Aoc.Day05 do
   end
 
   def part_two(input) do
-    input
+    [stacks, instructions] = input
+    |> File.read!()
+    |> String.split("\n\n")
+
+    stacks = build_stack(stacks)
+    instructions = parse_instructions(instructions)
+
+    operate_9001(stacks, instructions)
+    |> Enum.map(fn s ->
+      {e, _} = Stack.pop(s)
+      e
+    end)
+    |> Enum.join()
   end
 
   defp operate(stacks, instructions) do
@@ -34,6 +46,22 @@ defmodule Aoc.Day05 do
         s
         |> List.replace_at(from, stack_from)
         |> List.replace_at(to, stack_to)
+    end)
+
+  end
+
+  defp operate_9001(stacks, instructions) do
+
+    Enum.reduce(instructions, stacks, fn [n, from, to], s ->
+      stack_from = Enum.at(s, from)
+      stack_to = Enum.at(s, to)
+
+      {head, sf} = MultiStack.pop(stack_from, n)
+      st = MultiStack.push(stack_to, head)
+
+      s
+      |> List.replace_at(from, sf)
+      |> List.replace_at(to, st)
     end)
 
   end
@@ -73,4 +101,15 @@ defmodule Stack do
   def new(), do: []
   def push(stack, item), do: [item | stack]
   def pop([head | stack]), do: {head, stack}
+end
+
+defmodule MultiStack do
+  def new(), do: []
+  def push(stack, items) do
+    items ++ stack
+  end
+  def pop(stack, n) do
+    head = Enum.take(stack, n)
+    {head, stack -- head}
+  end
 end

@@ -76,15 +76,52 @@ defmodule Aoc.Day08 do
       end)
     end)
 
-    Enum.reduce(list, %{}, fn e, acc ->
-
-      Map.merge(acc, e)
-
-    end)
+    Enum.reduce(list, %{}, fn e, acc -> Map.merge(acc, e) end)
 
   end
 
   def part_two(input) do
-    input
+    data = input
+    |> InputReader.get_lines_string()
+    |> Enum.map(fn s -> String.graphemes(s) |> Enum.map(&String.to_integer/1) end)
+
+    rows = Enum.count(data) - 1
+    cols = Enum.count(Enum.at(data, 0)) - 1
+
+    map = build_map(data, rows, cols)
+
+    Enum.reduce(map, [], fn {{r, c} ,v}, acc ->
+      acc ++ [extract_lower_trees(r, c, v, map, rows, cols)]
+    end)
+    |> Enum.max()
+  end
+
+  defp extract_lower_trees(0, _c, _v, _map, _rows, _cols), do: 0
+  defp extract_lower_trees(_r, 0, _v, _map, _rows, _cols), do: 0
+  defp extract_lower_trees(r, _c, _v, _map, rows, _cols) when r == rows, do: 0
+  defp extract_lower_trees(_r, c, _v, _map, _rows, cols) when c == cols, do: 0
+
+  defp extract_lower_trees(r, c, v, map, rows, cols) do
+    right = Enum.reduce_while(c+1..cols, [], fn y, acc ->
+      t = [%{{r, y} => map[{r, y}]}]
+      if map[{r, y}] < v, do: {:cont, acc ++ t}, else: {:halt, acc ++ t}
+    end)
+
+    left = Enum.reduce_while(c-1..0, [], fn y, acc ->
+      t = [%{{r, y} => map[{r, y}]}]
+      if map[{r, y}] < v, do: {:cont, acc ++ t}, else: {:halt, acc ++ t}
+    end)
+
+    down = Enum.reduce_while(r+1..rows, [], fn x, acc ->
+      t = [%{{x, c} => map[{x, c}]}]
+      if map[{x, c}] < v, do: {:cont, acc ++ t}, else: {:halt, acc ++ t}
+    end)
+
+    up = Enum.reduce_while(r-1..0, [], fn x, acc ->
+      t = [%{{x, c} => map[{x, c}]}]
+      if map[{x, c}] < v, do: {:cont, acc ++ t}, else: {:halt, acc ++ t}
+    end)
+
+    Enum.count(right) * Enum.count(left) * Enum.count(down) * Enum.count(up)
   end
 end

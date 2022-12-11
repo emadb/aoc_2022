@@ -2,7 +2,7 @@ defmodule Aoc.Day10 do
   def part_one(input) do
     list = InputReader.get_lines_string(input)
     |> Enum.flat_map(&parse_line/1)
-    |> Enum.scan(1, fn x,n -> n + x end)
+    |> Enum.scan(1, fn x, n -> n + x end)
     |> then(&[1 | &1])
 
     Enum.at(list, 19) * 20 +
@@ -22,6 +22,25 @@ defmodule Aoc.Day10 do
   end
 
   def part_two(input) do
-    input
+    list = InputReader.get_lines_string(input)
+    |> Enum.flat_map(&parse_line/1)
+    |> Enum.scan(1, fn x, n -> n + x end)
+    |> then(&[1 | &1])
+    |> Enum.with_index(1)
+    |> Enum.drop(-1)
+    |> Enum.reduce("", fn {x, cycle}, crt ->
+      crt_pos = rem(cycle - 1, 40)
+      if crt_pos - 1 <= x and x <= crt_pos + 1 do
+        crt <> "#"
+      else
+        crt <> "."
+      end
+    end)
+    |> String.graphemes()
+    |> Enum.chunk_every(40)
+    |> Enum.join("\n")
+
+
+
   end
 end

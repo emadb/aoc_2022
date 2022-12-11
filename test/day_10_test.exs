@@ -20,13 +20,15 @@ defmodule Aoc.Day10Test do
   #   input = Path.absname(@test_input)
   #   result = Aoc.Day10.part_two(input)
 
-  #   assert result == nil
+  #   IO.inspect result
   # end
 
-  # test "part two" do
-  #   input = Path.absname(@real_input)
-  #   result = Aoc.Day10.part_two(input)
-  #   assert result == nil
-  # end
+  test "part two" do
+    input = Path.absname(@real_input)
+    result = Aoc.Day10.part_two(input)
+    IO.puts "-----"
+    IO.puts result
+    IO.puts "-----"
+  end
 
 end

@@ -14,18 +14,16 @@ defmodule Aoc.Day11Test do
     assert result == 111210
   end
 
-  # test "part two (test)" do
-  #   input = Path.absname(@test_input)
-  #   result = Aoc.Day11.part_two(input)
+  @tag timeout: :infinity
+  test "part two (test)" do
+    result = Aoc.Day11.part_two(part1_test_data())
+    assert result == 2713310158
+  end
 
-  #   assert result == nil
-  # end
-
-  # test "part two" do
-  #   input = Path.absname(@real_input)
-  #   result = Aoc.Day11.part_two(input)
-  #   assert result == nil
-  # end
+  test "part two" do
+    result = Aoc.Day11.part_two(part1_real_data())
+    assert result == 15447387620
+  end
 
 
   def part1_test_data() do
@@ -33,7 +31,7 @@ defmodule Aoc.Day11Test do
       0 => %{
         count: 0,
         items: [79, 98],
-        op: fn old -> old * 19 end,
+        op: fn old -> Integer.mod(old * 19, 96577) end,
         test: fn d -> if rem(d, 23) == 0, do: 2, else: 3 end,
         throw_to: []
       },
@@ -47,7 +45,7 @@ defmodule Aoc.Day11Test do
       2 => %{
         count: 0,
         items: [79, 60, 97],
-        op: fn old -> old * old end,
+        op: fn old -> Integer.mod(old * old, 96577) end,
         test: fn d -> if rem(d, 13) == 0, do: 1, else: 3 end,
         throw_to: []
       },
@@ -66,14 +64,14 @@ defmodule Aoc.Day11Test do
       0 => %{
         count: 0,
         items: [54, 53],
-        op: fn old -> old * 3 end,
+        op: fn old -> Integer.mod(old * 3, 9699690) end,
         test: fn d -> if rem(d, 2) == 0, do: 2, else: 6 end,
         throw_to: []
       },
       1 => %{
         count: 0,
         items: [95, 88, 75, 81, 91, 67, 65, 84],
-        op: fn old -> old * 11 end,
+        op: fn old -> Integer.mod(old * 11, 9699690) end,
         test: fn d -> if rem(d, 7) == 0, do: 3, else: 4 end,
         throw_to: []
       },
@@ -108,7 +106,7 @@ defmodule Aoc.Day11Test do
       6 => %{
         count: 0,
         items: [60, 95, 76, 66, 91],
-        op: fn old -> old * old end,
+        op: fn old -> Integer.mod(old * old, 9699690) end,
         test: fn d -> if rem(d, 13) == 0, do: 2, else: 5 end,
         throw_to: []
       },

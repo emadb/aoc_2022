@@ -11,7 +11,7 @@ defmodule Aoc.Day11Test do
 
   test "part one" do
     result = Aoc.Day11.part_one(part1_real_data())
-    assert result == nil
+    assert result == 111210
   end
 
   # test "part two (test)" do

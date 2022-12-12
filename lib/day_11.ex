@@ -2,7 +2,6 @@ defmodule Aoc.Day11 do
 
 
   def part_one(input) do
-    monkeys = input
     1..20 |> Enum.reduce(input, fn _round, monkeys ->
       Enum.reduce(Map.keys(monkeys), monkeys, fn k, mm ->
         mm = Map.put(mm, k, Map.update!(mm[k], :count, &(&1 + Enum.count(mm[k].items))))

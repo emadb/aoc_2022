@@ -10,22 +10,32 @@ defmodule Aoc.Day12 do
     end)
 
 
-    {dest, _} = Enum.find(map, fn {_, v} -> v == 0 end)
-    {start, _} = Enum.find(map, fn {_, v} -> v == 27 end)
+    {{xs, ys}, _} = Enum.find(map, fn {_, v} -> v == 0 end)
+    {dest, _} = Enum.find(map, fn {_, v} -> v == 27 end)
 
-    navigate(start, dest, map, [])
+    navigate([{{xs, ys}, 1}], dest, map, [], [{xs, ys}])
     |> IO.inspect
     |> Enum.count()
   end
 
- defp get_key(m), do: Map.keys(m) |> List.first()
+  defp get_key(m), do: Map.keys(m) |> List.first()
 
-  defp navigate({xs, ys}, {xd, yd}, _map, steps) when {xs, ys} == {xd, yd}, do: steps
-  defp navigate({xs, ys}, {xd, yd}, map, steps) do
-    Enum.reduce(candidates({xs, ys}, map, steps), [], fn {x, y}, acc ->
-      acc ++ navigate({x, y}, {xd, yd}, map, steps ++ [{xs, ys}])
+  def navigate([], dest, map, step, visited), do: step
+  def navigate([{{x, y}, w} | rest], dest, map, step, visited) do
+    Enum.map(candidates({x, y}, map, visited), fn c ->
+      {c, w + 1}
     end)
+
+    navigate(rest, dest, map, step + 1, visited ++ [{x, y}])
+
   end
+
+  # defp navigate({xs, ys}, {xd, yd}, _map, steps) when {xs, ys} == {xd, yd}, do: steps
+  # defp navigate({xs, ys}, {xd, yd}, map, steps) do
+  #   Enum.reduce(candidates({xs, ys}, map, steps), %{}, fn {x, y}, acc ->
+  #     acc ++ navigate({x, y}, {xd, yd}, map, steps ++ [{xs, ys}])
+  #   end)
+  # end
 
   defp candidates({xc, yc}, map, steps) do
     [{-1, 0}, {1, 0}, {0, -1}, {0, 1}]
